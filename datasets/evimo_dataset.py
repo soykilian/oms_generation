@@ -18,12 +18,12 @@ from tqdm import tqdm
 #from version_2.bin.utils.plot_events import plot_animation
 
 class EVIMODataset(tonic.Dataset):
-    def __init__(self, data_dir, num_steps, dvs=False):
+    def __init__(self, data_dir, oms_dir, masks_dir, num_steps, dvs=False):
         super().__init__("./")
 
-        self.oms_file = os.path.join("/scratch/mclerico/dataset/eval_96",data_dir)
+        self.oms_file = os.path.join(oms_dir,data_dir)
         self.oms_file += "_frames"
-        self.dvs_file = os.path.join("/scratch/mclerico/dataset/eval",data_dir)
+        self.dvs_file = os.path.join(masks_dir,data_dir)
         self.height = 260
         self.width = 346
         self.num_steps = num_steps
