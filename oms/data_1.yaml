@@ -1,0 +1,14 @@
+video:
+  dir: /home/aryalohia/PycharmProjects/iris/version_2/VSim_2/simulated_data/data_3/input_REF.mp4
+  width: 346
+  height: 260
+  fps: 40
+params:
+  h_resize_factor: 1
+  w_resize_factor: 1
+  resize_factor_motion: 1
+  center_kernel_radius: 3
+  surround_kernel_radius: 5
+  motion_surround_weight: 1
+  dvs_threshold: 245
+  oms_threshold: .79
