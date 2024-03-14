@@ -165,10 +165,13 @@ class spikeLoss(torch.nn.Module):
 
         return torch.mean(torch.sqrt(torch.sum((spikeOut - spikeDesired) ** 2, dim=1)))
     
-    def getIOU(self, spike_pred, spike_gt):
+    def getIOU(self, spike_pred, spike_gt, dr= False):
         spike_pred = spike_pred.detach().cpu().numpy()
         spike_gt = spike_gt.detach().cpu().numpy()
 
         intersection = np.sum(np.logical_and(spike_pred, spike_gt))
         union = np.sum(np.logical_or(spike_pred, spike_gt))
+        if dr:
+            false_positive = np.sum(np.logical_and(np.logical_not(spike_gt), spike_pred))
+            return 1 if intersection > 0.5*np.sum(spike_gt) and intersection > false_positive else 0
         return intersection/union

@@ -8,8 +8,6 @@ import tonic
 import torch
 from matplotlib import pyplot as plt
 
-from version_2.bin.utils.plot_events import plot_animation
-
 
 class EVIMODataset(tonic.Dataset):
     """
@@ -62,7 +60,7 @@ class EVIMODataset(tonic.Dataset):
                 os.path.join(save_dir, file)
                 for file in directory if file.endswith("_frames.npy")
             ])
-            print(dvs_events)
+            #print(dvs_events)
 
             # list of all the mask paths (.npy files)
             masks: list = sorted([
@@ -112,13 +110,13 @@ class EVIMODataset(tonic.Dataset):
 
         # load the data and target from the paths
         frames = np.load(self.dvs_events[idx])
-        print("FRAMES", frames.shape)
+        #print("FRAMES", frames.shape)
 
         masks = np.load(self.masks[idx])
         masks = torch.tensor(masks).float()
 
 
-        return frames, masks, f_name, c_name
+        return frames, masks, f_name[:-7], c_name
 
     def process_data(self, save_dir: str, class_dir: str):
         """
@@ -234,20 +232,3 @@ class EVIMODataset(tonic.Dataset):
         #print(f"Masks Unique: {torch.unique(masks)}")
 
         return frames, masks
-
-    def plot_events(self, fps: int, save_dir: str, index: int = 0):
-        """
-        Plots the events as a video using code modified from tonic.utils.plot_animation. Now uses
-        skvideo.io.FFmpegWriter to write the video, and you can manually set the fps.
-        :param self: np.ndarray of events frames. Shape: (num_frames, height, width)
-        :param fps: frames per second of the video
-        :param save_dir: directory to save the video; MUST END IN ".mp4"
-        :param index: index of the data to plot
-        """
-        events = np.load(self.dvs_events[index])
-
-        animation = plot_animation(
-            frames=events,
-            fps=fps,
-            save_path=save_dir
-        )

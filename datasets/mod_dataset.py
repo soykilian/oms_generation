@@ -82,12 +82,14 @@ class MODDataset(Dataset):
             
             masked_spike_tensor = torch.zeros((2, self.width, self.height, self.num_time_bins))   
             masked_spike_tensor[m_ps, m_ys-1, m_xs-1, m_ts] = 1
+           
             full_mask_tensor = torch.zeros((2, self.width, self.height, self.num_time_bins))   
             for i in range(0, self.k):
                 curr_start = int((self.num_time_bins) * (i)/self.k)
                 curr_end = int((self.num_time_bins) * (i+1)/self.k)
 
-                curr_masknm = os.path.join(self.maskDir, "mask_{:08d}.png".format(idx+i+1))
+                curr_mask= os.path.join(self.maskDir, "mask_{:08d}.png".format(idx+i+1))
+                fullmask = np.asarray(Image.open(curr_mask))
                 fullmask = np.expand_dims(fullmask, axis=(0,3))
                 tiled = torch.from_numpy(np.tile(fullmask, (2,1,1, curr_end-curr_start)))        
 
@@ -97,16 +99,19 @@ class MODDataset(Dataset):
             assert not torch.isnan(masked_spike_tensor).any()
             if (len(m_ps) == 0 or len(ps)/len(m_ps) > self.maxBackgroundRatio):
                 return None
-            dvs_spike_2d = torch.sum(spike_tensor, axis=(0,3))
-            dvs_spike_2d[dvs_spike_2d>1]=1
-            oms_input = torch.logical_and(dvs_spike_2d, torch.Tensor(self.oms_frames[idx]))
-            out = {
-                'dvs_spike_tensor': spike_tensor,
-                'dvs_mask': masked_spike_tensor,
-                'oms_spike_tensor':oms_input 
-                #'ratio': len(ps)/len(m_ps) #Division by zero error
-            }
-            return out  
+            oms_masked_frame = torch.empty_like(masked_spike_tensor)
+            oms_spike_mask = torch.empty_like(masked_spike_tensor)
+            for k in range(self.num_time_bins):
+                oms_masked_frame[0,:,:,k]= torch.logical_and(spike_tensor[0, :,:,k], torch.Tensor(self.oms_frames[idx]))
+                oms_masked_frame[1, :, :, k]= torch.logical_and(spike_tensor[1,:,:,k], torch.Tensor(self.oms_frames[idx]))
+                oms_spike_mask[1,:,:,k] = torch.logical_and(oms_masked_frame[1,:,:,k], masked_spike_tensor[1,:,:,k])
+                oms_spike_mask[0,:,:,k] = torch.logical_and(oms_masked_frame[0,:,:,k], masked_spike_tensor[0,:,:,k])
+            return  {"oms_spike_tensor": oms_masked_frame,
+                 "oms_mask":oms_spike_mask,
+                 "dvs_spike_tensor": spike_tensor,
+                 "dvs_mask" : masked_spike_tensor,
+                 }
+
             
 
 

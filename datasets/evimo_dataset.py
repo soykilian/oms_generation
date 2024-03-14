@@ -18,18 +18,18 @@ from tqdm import tqdm
 #from version_2.bin.utils.plot_events import plot_animation
 
 class EVIMODataset(tonic.Dataset):
-    def __init__(self, data_dir, oms_dir, masks_dir, num_steps, dvs=False):
+    def __init__(self, oms_dir, masks_dir, num_steps, dvs=False):
         super().__init__("./")
 
-        self.oms_file = os.path.join(oms_dir,data_dir)
-        self.oms_file += "_frames"
-        self.dvs_file = os.path.join(masks_dir,data_dir)
+        self.oms_file=oms_dir
+        self.dvs_file = masks_dir
         self.height = 260
         self.width = 346
         self.num_steps = num_steps
         self.maxBackgroundRatio = 1.5
         self.dvs = dvs
-        self.oms_file =os.path.join(self.oms_file ,  self.oms_file.split('/')[-1] )
+        self.oms_file =os.path.join(self.oms_file ,  self.oms_file.split('/')[-1])
+        print(self.oms_file)
         self.oms_file+= '_neuroscience.h5'
         with h5py.File(self.oms_file, 'r') as f:
             self.len = f['oms_frames'][:].shape[0]
@@ -66,7 +66,7 @@ class EVIMODataset(tonic.Dataset):
         #plt.imshow(frame_sum_2) 
         #plt.savefig("./masked_frame" + str(idx)+".png")
         """
-        return  {"oms_spike_tensor": oms_data[idx],
+        return  {"oms_spike_tensor": oms_masked_frame,
                  "oms_mask":oms_spike_mask,
                  "dvs_spike_tensor": frame,
                  "dvs_mask" : mask,

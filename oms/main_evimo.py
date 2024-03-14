@@ -17,8 +17,6 @@ from version_2.metrics.phash import phash_comp
 from evimo_dataset import EVIMODataset
 #from bdd_dataset import bdd_dataset
 root_dir = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
-print(root_dir)
-print(os.getcwd())
 params_dir = os.path.join(os.getcwd() , "data_1")
 save_dir = os.path.join(os.getcwd(), 'results/')
 width = 346
