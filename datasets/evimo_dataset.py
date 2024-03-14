@@ -21,7 +21,6 @@ class EVIMODataset(tonic.Dataset):
         self.maxBackgroundRatio = maxBackgroundRatio
         self.dvs = dvs
         self.oms_file =os.path.join(self.oms_file ,  self.oms_file.split('/')[-1])
-        print(self.oms_file)
         self.oms_file+= '_neuroscience.h5'
         with h5py.File(self.oms_file, 'r') as f:
             self.len = f['oms_frames'][:].shape[0]

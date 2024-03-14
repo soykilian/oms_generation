@@ -1,5 +1,4 @@
 video:
-  dir: /home/aryalohia/PycharmProjects/iris/version_2/VSim_2/simulated_data/data_3/input_REF.mp4
   width: 346
   height: 260
   fps: 40

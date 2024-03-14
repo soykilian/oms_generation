@@ -104,8 +104,6 @@ class Runner(RBase):
 
         #print("save to: ", self.output_dir)
 
-        if self.saveImages:
-            print("saving images to", os.getcwd(), self.imageDir)
 
         print("mean IoU (%)", total_input_IOU*100/tot_frames)
         print("DR (%)", np.mean(total_dr)*100)

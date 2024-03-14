@@ -20,5 +20,3 @@ EVENTS_TO_FRAMES_DIR = os.path.join(ROOT_DIR, 'dvs_methods', 'event_encoding.py'
 # PARAMETER_SEARCH DIRS
 BAYES_OPT_PARAMS = os.path.join(ROOT_DIR, 'parameter_search', 'bayes_opt_params.yaml')
 
-# v2e DIRS
-V2E_DIR = "/home/aryalohia/PycharmProjects/v2e"

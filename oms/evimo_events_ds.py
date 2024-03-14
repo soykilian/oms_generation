@@ -14,7 +14,6 @@ import h5py
 import re
 import sys
 from tqdm import tqdm
-sys.path.append("/home/mavi/iris")
 from version_2.bin.utils.plot_events import plot_animation
 
 class EVIMODataset(tonic.Dataset):
