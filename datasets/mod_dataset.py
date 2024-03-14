@@ -1,14 +1,9 @@
 import torch
 import numpy as np
 from torch.utils.data import Dataset
-from torchvision import datasets
-from torchvision.transforms import ToTensor
-from torchvision.io import read_image
 import h5py
 import os
-import pandas as pd
 from PIL import Image
-import matplotlib.pyplot as plt
 
 
 
@@ -30,7 +25,7 @@ class MODDataset(Dataset):
                  self.oms_frames = f['oms_frames'][:]
             self.maskDir = maskDir
             self.crop = crop
-            self.maxBackgroundRatio = 2.5
+            self.maxBackgroundRatio = maxBackgroundRatio
             self.height = 346
             self.width = 260
             self.num_time_bins = num_steps

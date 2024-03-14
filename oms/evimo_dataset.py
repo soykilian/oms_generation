@@ -6,7 +6,6 @@ from pathlib import Path
 import numpy as np
 import tonic
 import torch
-from matplotlib import pyplot as plt
 
 
 class EVIMODataset(tonic.Dataset):
@@ -218,7 +217,6 @@ class EVIMODataset(tonic.Dataset):
         frames[frames > 0] = 1
 
 
-        plt.imshow(frames[0][0])
         try:
             assert masks.shape == frames.shape
         except AssertionError:

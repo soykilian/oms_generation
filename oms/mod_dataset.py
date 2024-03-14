@@ -1,12 +1,7 @@
 import os
-import h5py
-from PIL import Image
-from pathlib import Path
-
 import numpy as np
-import tonic
 import torch
-from matplotlib import pyplot as plt
+import tonic
 
 
 class MODDataset(tonic.Dataset):

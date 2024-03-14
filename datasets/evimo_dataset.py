@@ -5,20 +5,12 @@ from PIL import Image
 from pathlib import Path
 
 import numpy as np
-import random
 import tonic
 import torch
-from matplotlib import pyplot as plt
-from snntorch import spikegen
 import h5py
-import re
-import sys
-from tqdm import tqdm
-#sys.path.append("/home/mavi/iris")
-#from version_2.bin.utils.plot_events import plot_animation
 
 class EVIMODataset(tonic.Dataset):
-    def __init__(self, oms_dir, masks_dir, num_steps, dvs=False):
+    def __init__(self, oms_dir, masks_dir, num_steps, dvs=False, maxBackgroundRatio=1.5):
         super().__init__("./")
 
         self.oms_file=oms_dir
@@ -26,7 +18,7 @@ class EVIMODataset(tonic.Dataset):
         self.height = 260
         self.width = 346
         self.num_steps = num_steps
-        self.maxBackgroundRatio = 1.5
+        self.maxBackgroundRatio = maxBackgroundRatio
         self.dvs = dvs
         self.oms_file =os.path.join(self.oms_file ,  self.oms_file.split('/')[-1])
         print(self.oms_file)
