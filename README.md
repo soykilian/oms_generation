@@ -10,7 +10,7 @@
 
 ## Requirements
 ```bash
-pip install -r requirements.txt
+conda install --file requirements.txt
 ```
 ## Data
 To obtain the filtered events from both datasets in numpy format refer to this [source](https://drive.google.com/drive/folders/1yrHUqYf0rWrfxbQILzKB9_kDYWF6yekd). Maintain the directory structure for proper performance.
@@ -27,3 +27,4 @@ The following files were taken from [SpikeMS](https://github.com/prgumd/SpikeMS)
 ## Usage
 Search for "TODO" comments in **main.ipynb** to modify the paths of the sequence files and test the algorithm with different sequences. 
 
+### This respository will be made available upon acceptance of the manuscript. 
